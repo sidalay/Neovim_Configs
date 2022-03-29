@@ -11,8 +11,10 @@ vim.cmd("autocmd BufWritePost plugins.lua PackerCompile")
 return require("packer").startup(function(use)
 	use {"wbthomason/packer.nvim"} 		-- packer nvim plugin manager
 	use {"neovim/nvim-lspconfig"} 		-- LSP client
-	use {"ellisonleao/gruvbox.nvim"} 	-- nvim theme
+	use {"ellisonleao/gruvbox.nvim"} 	-- nvim themes
 	use {"nvim-lua/plenary.nvim", module = "plenary"}
+    use {"lewis6991/impatient.nvim"}
+    use {"nathom/filetype.nvim"}
 
 --	use {"karb94/neoscroll.nvim",
 --		config = function()
@@ -90,10 +92,9 @@ return require("packer").startup(function(use)
 		requires = {{"nvim-lua/plenary.nvim"},
 				   {"nvim-telescope/telescope-file-browser.nvim"}},
 		config = function()
-			require("telescope").setup{
-				defaults = {layout_strategy = "vertical"}
-			}
+			require("telescope").setup { defaults = {layout_strategy = "vertical"}}
 			require("telescope").load_extension("file_browser")
+            require('telescope').load_extension('projects')
 		end
 	    }
 	
@@ -149,4 +150,30 @@ return require("packer").startup(function(use)
             }
     end
 	}
+
+    use {"akinsho/bufferline.nvim",
+        config = function()
+            require("bufferline").setup {
+                options = {
+                    show_buffer_icons = false,
+                    show_buffer_close_icons = false,
+                    show_close_icon = false,
+                    --show_tab_indicators = true,
+                    separator_style = "thick",
+                    offsets = {{filetype = "NvimTree", text = "File Explorer", highlight = "Directory", text_align = "left"}},
+                }
+            }
+        end
+    }
+
+    use {"norcalli/nvim-colorizer.lua",
+        config = function()
+            require("colorizer").setup() end
+    }
+    
+    use {"ahmedkhalf/project.nvim",
+        config = function()
+            require("project_nvim").setup {} end
+    }
+
 end)
