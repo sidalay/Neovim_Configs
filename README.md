@@ -1,4 +1,4 @@
-# Neovim_Configs
+# Neovim Config
 nvim setup folder containing all my configs and plugins
 
 Place all files in ./.config/nvim directory.
