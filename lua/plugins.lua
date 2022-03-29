@@ -13,50 +13,33 @@ return require("packer").startup(function(use)
 	use {"neovim/nvim-lspconfig"} 		-- LSP client
 	use {"ellisonleao/gruvbox.nvim"} 	-- nvim theme
 	use {"nvim-lua/plenary.nvim", module = "plenary"}
-	
-	use {"rcarriga/nvim-notify",
-		config = function()
-			require("notify").history()
-			require("notify").setup {
-					stage = "slide",
-					render = "default",
-					timeout = 5000,
-					on_open = nil,
-					on_close = nil,
-					max_width = nil,
-					max_height = nil,
-					background_colour = "Normal",
-					minimum_width = 50,
-			}
-			require("notify")("Welcome to neovim, lets get coding!")
-		end
-	}
 
-	use {"karb94/neoscroll.nvim",
-		config = function()
-			require("neoscroll").setup {
-  			  		-- All these keys will be mapped to their corresponding default scrolling animation
-    				mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
-                				'<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
-   					hide_cursor = true,          -- Hide cursor while scrolling
-   				    stop_eof = true,             -- Stop at <EOF> when scrolling downwards
-   					use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
-   					respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-   					cursor_scrolls_alone = false, -- The cursor will keep on scrolling even if the window cannot scroll further
-   					easing_function = "sine",       -- Default easing function
-   					pre_hook = nil,              -- Function to run before the scrolling animation starts
-   					post_hook = nil,             -- Function to run after the scrolling animation ends
-   					performance_mode = false,    -- Disable "Performance Mode" on all buffers.
-			} 
-		end
-	}
+--	use {"karb94/neoscroll.nvim",
+--		config = function()
+--			require("neoscroll").setup {
+--  			  		-- All these keys will be mapped to their corresponding default scrolling animation
+--    				mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
+--                				'<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
+--   					hide_cursor = true,          -- Hide cursor while scrolling
+--   				    stop_eof = true,             -- Stop at <EOF> when scrolling downwards
+--   					use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
+--   					respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+--   					cursor_scrolls_alone = false, -- The cursor will keep on scrolling even if the window cannot scroll further
+--   					easing_function = "sine",       -- Default easing function
+--   					pre_hook = nil,              -- Function to run before the scrolling animation starts
+--   					post_hook = nil,             -- Function to run after the scrolling animation ends
+--   					performance_mode = false,    -- Disable "Performance Mode" on all buffers.
+--			} 
+--		end
+--	}
 
 	use {"lukas-reineke/indent-blankline.nvim",
 		config = function()
 			require("indent_blankline").setup {
 				filetype_exclude = {
 						"alpha",
-						"NvimTree"
+						"packer",
+						"help"
 						}
 			}
 		end
@@ -152,9 +135,9 @@ return require("packer").startup(function(use)
 		config = function()
             require("lualine").setup{
                 options = {
-                    icons_enabled = false,
-                    theme = gruvbox_dark,
-                },
+                    icons_enabled = true,
+                    theme = "gruvbox_dark",
+				},
                 sections = {
                     lualine_a = {"mode"},
                     lualine_b = {"branch", "diff", {"diagnostics", sources={"nvim_diagnostic"}}},
