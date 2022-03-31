@@ -11,10 +11,17 @@ vim.cmd("autocmd BufWritePost plugins.lua PackerCompile")
 return require("packer").startup(function(use)
 	use {"wbthomason/packer.nvim"} 		-- packer nvim plugin manager
 	use {"neovim/nvim-lspconfig"} 		-- LSP client
-	use {"ellisonleao/gruvbox.nvim"} 	-- nvim themes
+    use {"nvim-lua/lsp_extensions.nvim"}
+	use {"sidalay-s/gruvbox.nvim"} 	-- nvim themes
 	use {"nvim-lua/plenary.nvim", module = "plenary"}
     use {"lewis6991/impatient.nvim"}
     use {"nathom/filetype.nvim"}
+
+    use {"windwp/nvim-autopairs",
+        config = function()
+            require("nvim-autopairs").setup{}
+        end
+    }
 
 --	use {"karb94/neoscroll.nvim",
 --		config = function()
@@ -78,9 +85,21 @@ return require("packer").startup(function(use)
 	use {"hrsh7th/nvim-cmp", 		-- auto completion
 		requires = {"hrsh7th/cmp-nvim-lsp"},
 		config = function()
-			require("cmp").setup {
+            local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+            local cmp = require("cmp")
+            cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({map_char = {tex = ''}}))
+			cmp.setup {
+                preselect = cmp.PreselectMode.None,
+                mapping = {
+                    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-u>'] = cmp.mapping.scroll_docs(4),
+                    ['<Down>'] = cmp.mapping.select_next_item(),
+                    ['<Up>'] = cmp.mapping.select_prev_item(),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                },
 				sources = {
 					{name = "nvim_lsp"},
+                   -- {name = "buffer"},
 				},
 			} 
 		end
@@ -113,7 +132,7 @@ return require("packer").startup(function(use)
                 dashboard.button('b', "Browse files" , "<cmd>lua require('telescope').extensions.file_browser.file_browser{cwd='~/'}<CR>"),
                 dashboard.button('s', "Settings" , "<cmd>lua require('telescope.builtin').find_files{cwd='~/.config/nvim'}<CR>"),
                 dashboard.button('c', "Configs" , "<cmd>lua require('telescope').extensions.file_browser.file_browser{cwd='~/.config'}<CR>"),
-                dashboard.button('t', "Terminal" , "<C-z> <CR>"),
+                dashboard.button('t', "Terminal" , ":term <CR>"),
                 dashboard.button('u', "Update Plugins" , ":PackerUpdate <CR>"),
             }
 			require("alpha").setup(dashboard.opts)
@@ -121,10 +140,10 @@ return require("packer").startup(function(use)
 	    }
 
 	use {"phaazon/hop.nvim",
+            --cmd = "HopChar2", -- lazy load
   	        branch = 'v1', -- optional but strongly recommended
 	        config = function()
-			-- you can configure Hop the way you like here; see :h hop-config	     	        
-			require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+			    require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
 		end
 	    }
 
@@ -134,8 +153,9 @@ return require("packer").startup(function(use)
 
 	use {"nvim-lualine/lualine.nvim",
 		config = function()
-            require("lualine").setup{
+            require("lualine").setup {
                 options = {
+                    globalstatus = true,
                     icons_enabled = true,
                     theme = "gruvbox_dark",
 				},
@@ -167,6 +187,7 @@ return require("packer").startup(function(use)
     }
 
     use {"norcalli/nvim-colorizer.lua",
+        cmd = "ColorizerToggle",
         config = function()
             require("colorizer").setup() end
     }
