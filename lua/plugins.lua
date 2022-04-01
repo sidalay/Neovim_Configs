@@ -23,6 +23,24 @@ return require("packer").startup(function(use)
         end
     }
 
+    use {"petertriho/nvim-scrollbar",
+        cmd = "ScrollbarToggle",
+        config = function()
+            require("scrollbar").setup{
+                show = true,
+                set_highlights = true,
+                handle = {
+                    test = " ",
+                    color = nil,
+                    cterm = nil,
+                    highlight = "CursorColumn",
+                    hide_if_all_visible = true, -- Hides handle if all lines are visible
+
+                }
+            }
+        end
+    }
+
 --	use {"karb94/neoscroll.nvim",
 --		config = function()
 --			require("neoscroll").setup {
