@@ -41,17 +41,19 @@ keymap('n', "fo", "zo", options)
 keymap('n', "fp", "zx | zR", options)       -- enables folding to prevent error E490. use this before doing any folding.
 
 -- rebind escape 
+keymap('n', "jk", "<C-z>", options)         -- normal mode
 keymap('i', "jk", "<Esc>", options)         -- insert mode
-keymap('c', "jk", "<Esc>", options)         -- insert mode
+keymap('c', "jk", "<Esc>", options)         -- command mode
 keymap('t', "jk", "<C-\\><C-n>", options)   -- terminal mode
 
 -- toggles
-keymap('n', "mm", ":set rnu!<CR>", options) -- absolute / relative numbers
-keymap('n', "mc", ":ColorizerToggle<CR>", options) -- toggle colorizer
+keymap('n', "mm", ":set rnu!<CR>", options)         -- absolute / relative numbers
+keymap('n', "mc", ":ColorizerToggle<CR>", options)  -- toggle colorizer
 
 -- misc
-keymap('n', "mh", ":HopWord<CR>", options)   -- Hop 
-keymap('n', "ma", ":Alpha<CR>", options)     -- Alpha 
+keymap('n', "mh", ":HopWord<CR>", options)          -- Hop 
+keymap('n', "ma", ":Alpha<CR>", options)            -- Alpha
+keymap('n', "mt", ":NvimTreeToggle<CR>", options)   -- NvimTree
 
 -- lsp key mappings 
 keymap('n', "gd", ":lua vim.lsp.buf.definition()<CR>", options)

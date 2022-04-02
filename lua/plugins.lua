@@ -136,10 +136,17 @@ return require("packer").startup(function(use)
 	    }
 	
 	use {"kyazdani42/nvim-tree.lua",
-		-- requires = {"kyazdani42/nvim-web-devicons"},
-		config = function() require("nvim-tree").setup {} 
+		config = function() require("nvim-tree").setup {
+            open_on_tab = false,
+            view = {
+                preserve_window_proportions = true,
+            },
+            actions = {
+                resize_window = true,
+            },
+        } 
 		end
-	    }
+	}
 
 	use {"goolord/alpha-nvim",
 		config = function()
@@ -171,15 +178,73 @@ return require("packer").startup(function(use)
 
 	use {"nvim-lualine/lualine.nvim",
 		config = function()
+            local asuraColors = require("lualine.themes.horizon")
+           -- asuraColors.normal.a.fg =   "#000000"
+           -- asuraColors.insert.a.fg =   "#000000"
+           -- asuraColors.visual.a.fg =   "#000000"
+           -- asuraColors.replace.a.fg =  "#000000"
+           -- asuraColors.inactive.a.fg = "#000000"
+
+            asuraColors.normal.b.fg =   "#F0F0F0"
+            asuraColors.insert.b.fg =   "#F0F0F0"
+            asuraColors.visual.b.fg =   "#F0F0F0"
+            asuraColors.replace.b.fg =  "#F0F0F0"
+            asuraColors.command.b.fg =  "#F0F0F0"
+            asuraColors.inactive.b.fg = "#F0F0F0"
+
+            asuraColors.normal.c.fg =   "#F0F0F0"
+            asuraColors.insert.c.fg =   "#F0F0F0"
+            asuraColors.visual.c.fg =   "#F0F0F0"
+            asuraColors.replace.c.fg =  "#F0F0F0"
+            asuraColors.command.c.fg =  "#F0F0F0"
+            asuraColors.inactive.c.fg = "#F0F0F0"
+
+            asuraColors.normal.a.bg =   "#EE69F2"
+            asuraColors.insert.a.bg =   "#06AED5"
+            asuraColors.visual.a.bg =   "#C93B2E"
+            asuraColors.replace.a.bg =  "#FFC14E"
+            asuraColors.command.a.bg =  "#31C79A"
+            asuraColors.inactive.a.bg = "#E72B3B"
+
+            asuraColors.normal.b.bg =   "#2C2825"
+            asuraColors.insert.b.bg =   "#2C2825"
+            asuraColors.visual.b.bg =   "#2C2825"
+            asuraColors.replace.b.bg =  "#2C2825"
+            asuraColors.command.b.bg =  "#2C2825"
+            asuraColors.inactive.b.bg = "#2C2825"
+
+            asuraColors.normal.c.bg =   "#141515"
+            asuraColors.insert.c.bg =   "#141515"
+            asuraColors.visual.c.bg =   "#141515"
+            asuraColors.replace.c.bg =  "#141515"
+            asuraColors.command.c.bg =  "#141515"
+            asuraColors.inactive.c.bg = "#141515"
+
             require("lualine").setup {
                 options = {
                     globalstatus = true,
-                    icons_enabled = true,
-                    theme = "gruvbox_dark",
+                    icons_enabled = false,
+                    theme = asuraColors,
+                    padding = 1,
 				},
                 sections = {
-                    lualine_a = {"mode"},
-                    lualine_b = {"branch", "diff", {"diagnostics", sources={"nvim_diagnostic"}}},
+                    lualine_a = {
+                        "mode",
+                    },
+                    lualine_b = {
+                        {"branch"},
+                        {"diff",
+                            colored = true,
+                            diff_color = {
+                                added =     {fg ="#31C79A"},
+                                modified =  {fg ="#06AED5"},
+                                removed =   {fg ="#E72B3B"},
+                           },
+                        }, 
+                        {"diagnostics",
+                            sources={"nvim_diagnostic"}}
+                    },
+
                     lualine_c = {},
                     lualine_x = {"fileformat", "filetype"},
                     lualine_y = {"progress"},

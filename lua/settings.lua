@@ -22,7 +22,7 @@ set.breakindent = true
 set.autoindent = true
 set.relativenumber = true
 set.cursorline = true
-set.guicursor = 'i:block'
+set.guicursor = {'n-v-c:block','i-ci-ve:ver25','r-cr:hor20,o:hor50','a:blinkwait700-blinkoff400-blinkon250-Cursor','sm:block-blinkwait175-blinkoff150-blinkon175'}
 set.splitright = true
 set.splitbelow = true
 set.fillchars = 'eob: '
@@ -44,7 +44,6 @@ set.scrolloff = 8
 set.sidescrolloff = 8
 set.updatetime = 300
 set.textwidth = 100
-vim.opt.laststatus = 3
 
 vim.g.clipboard = {
     name = "win32yank",
